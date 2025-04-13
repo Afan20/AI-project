@@ -1,0 +1,55 @@
+grocery-recommender/
+├── app.py               # Flask web server
+├── recommender.py       # ML model + data logic
+├── templates/
+│   └── index.html       # Frontend UI (Bootstrap)
+├── venv/                # Python virtual environment
+└── requirements.txt     # (Optional) Python dependencies
+User submits preference → Flask backend → 
+Map preference to keywords → Fetch food data via API →
+Extract & normalize nutrients → PyTorch model ranks foods →
+Top 10 recommendations → Returned to frontend and shown in browser
+📁 app.py (Web Server)
+
+Role:
+Accepts user input via HTML form
+Passes it to the ML function
+Returns results to be displayed in the browser
+📁 recommender.py (Data & ML Logic)
+
+1. fetch_food_data()
+Uses Open Food Facts API to search for products matching a term
+Extracts protein, carbs, fat, and calories per 100g
+2. preprocess_data()
+Drops missing values
+Normalizes nutrients using StandardScaler
+3. FoodRecommender (PyTorch model)
+A simple neural net (just one Linear layer)
+Learns to score food items based on nutrient alignment with preference
+4. get_recommendations(preference)
+Logic:
+
+Maps user input to search terms
+Fetches and combines data for all matched terms
+Scores each item using a preference-weighted loss
+Returns the top 10 results to Flask
+📁 templates/index.html (Frontend)
+
+Role:
+Displays a simple UI form
+Sends user input to Flask
+Displays top product recommendations
+🧪 What Makes This App Special
+
+Dynamically understands custom dietary input
+Live product data from Open Food Facts
+Learns a recommendation score from simple ML model
+Cleanly integrated as a web app
+
+📦 requirements.txt (Dependencies)
+
+flask
+pandas
+torch
+scikit-learn
+requests
